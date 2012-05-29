@@ -104,6 +104,7 @@ shared_examples_for "a MySQL MasterSlaveAdapter" do
       context "and slave catches up" do
         before do
           start_replication
+          move_master_clock # needed to read slave clock deterministically
           wait_for_replication_sync
         end
 
