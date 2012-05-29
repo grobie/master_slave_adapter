@@ -36,7 +36,8 @@ module MysqlHelper
 
   def wait_for_replication_sync
     Timeout.timeout(5) do
-      until slave_status == master_status; end
+      until (s = slave_status) == (m = master_status); end
+      puts "slave status is #{s} and master_status is #{m}"
     end
   rescue Timeout::Error
     raise "Replication synchronization failed"

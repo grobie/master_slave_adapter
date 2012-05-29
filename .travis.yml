@@ -7,3 +7,4 @@ gemfile:
   - spec/gemfiles/activerecord2.3
   - spec/gemfiles/activerecord3.0
   - spec/gemfiles/activerecord3.2
+script: "bundle exec rspec --color --format nested spec/integration/test_spec.rb"

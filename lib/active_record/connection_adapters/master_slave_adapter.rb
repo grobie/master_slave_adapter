@@ -421,10 +421,11 @@ module ActiveRecord
       end
 
       def slave_consistent?(conn, clock)
-        if (last_seen_clock = get_last_seen_slave_clock(conn)).try(:>=, clock)
+        if get_last_seen_slave_clock(conn).try(:>=, clock)
           true
         elsif (slave_clk = slave_clock(conn))
           set_last_seen_slave_clock(conn, slave_clk)
+          puts "slave clock is #{slave_clk}, but clock is #{clock}"
           slave_clk >= clock
         else
           false
