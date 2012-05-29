@@ -27,7 +27,8 @@ module ActiveRecord
         end
 
         def slave_clock(conn)
-          if status = conn.uncached { select_hash(conn, "SHOW SLAVE STATUS") }
+          @crazy_counter ||= 0
+          if status = conn.uncached { select_hash(conn, "SHOW SLAVE STATUS /* unique #{@crazy_counter += 1} */") }
             Clock.new(status['Relay_Master_Log_File'], status['Exec_Master_Log_Pos'])
           else
             Clock.zero

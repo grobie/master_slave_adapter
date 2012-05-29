@@ -425,7 +425,7 @@ module ActiveRecord
           true
         elsif (slave_clk = slave_clock(conn))
           set_last_seen_slave_clock(conn, slave_clk)
-          puts "slave clock is #{slave_clk}, but clock is #{clock}"
+          puts "slave clock is #{slave_clk}, but needed clock is #{clock}. Next slave clock is #{slave_clock(conn)}"
           slave_clk >= clock
         else
           false
@@ -483,10 +483,7 @@ module ActiveRecord
       end
 
       def set_last_seen_slave_clock(conn, clock)
-        last_seen = get_last_seen_slave_clock(conn)
-        if last_seen.nil? || last_seen < clock
-          conn.instance_variable_set(:@last_seen_slave_clock, clock)
-        end
+        conn.instance_variable_set(:@last_seen_slave_clock, clock)
       end
 
       def connect_to_master

@@ -59,6 +59,7 @@ describe "Test" do
   context "given slave lags behind" do
     before do
       stop_replication
+      puts "Stopped replication. Slave clock is at #{send(:status, :slave)[4..5].inspect}"
       move_master_clock
     end
 
